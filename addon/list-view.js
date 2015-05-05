@@ -119,17 +119,13 @@ export default Ember.ContainerView.extend(ListViewMixin, {
   },
 
   didInsertElement: function() {
-    var that = this;
-
     this._updateScrollableHeight();
 
-    this._scroll = function(e) { that.scroll(e); };
-
-    Ember.$(this.element).on('scroll', this._scroll);
+    Ember.$(this.element).on('scroll', Ember.run.bind(this, this.scroll));
   },
 
   willDestroyElement: function() {
-    Ember.$(this.element).off('scroll', this._scroll);
+    Ember.$(this.element).off('scroll', Ember.run.bind(this, this.scroll));
   },
 
   scroll: function(e) {
